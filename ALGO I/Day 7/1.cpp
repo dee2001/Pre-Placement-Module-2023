@@ -1,45 +1,15 @@
-class Solution {
-public:
-    bool checkInclusion(string s1, string s2) {
-        if(s1.length()>s2.length()){
-            return false;
-        }
-        vector<int> rec(26,0);
-        for(int i = 0; i<s1.length(); i++){
-            //cout << s1[i]-'a' << "\n";
-            rec[s1[i]-'a']++;
-        }
-        //cout << "ran\n";
-        /*for(int i =0; i<26; i++){
-            cout << rec[i] << " ";
-        }*/
-        //cout << "\n";
-        for(int i = 0; i<s2.length(); i++){
-            vector<int> chec(rec.begin(),rec.end());
-            //cout << 
-            if(chec[s2[i]-'a']){
-                int k = i;
-                while(k<s2.length()){
-                    if(chec[s2[k]-'a']){
-                        chec[s2[k]-'a']--;
-                    }
-                    else{
-                        break;
-                    }
-                    k++;
-                }
-                int flag = 0;
-                for(int j = 0; j<26; j++){
-                    if(chec[j]!=0){
-                        flag = 1;
-                        break;
-                    }
-                }
-                if (flag==0){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-};
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, color: int):
+        og = image[sr][sc]
+        if og == color:
+            return image
+        image[sr][sc] = color
+        if sr>0 and image[sr-1][sc]==og:
+            self.floodFill(image,sr-1,sc,color)
+        if sc>0 and image[sr][sc-1]==og:
+            self.floodFill(image,sr,sc-1,color)
+        if sr<len(image)-1 and image[sr+1][sc]==og:
+            self.floodFill(image,sr+1,sc,color)
+        if sc<len(image[0])-1 and image[sr][sc+1]==og:
+            self.floodFill(image,sr,sc+1,color)
+        return image
